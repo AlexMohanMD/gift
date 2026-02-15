@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <meta name="theme-color" content="#FFF5F9">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <title>Gift</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="app" id="app">
+
+    <!-- ===== SCREEN 1: Progress / Fake Loading ===== -->
+    <section class="screen screen-progress active" id="screen-progress">
+      <div class="bg-circles">
+        <span></span><span></span><span></span>
+      </div>
+
+      <div class="progress-header">
+        <h1>Retrieving Your Gift</h1>
+        <p>Please hold tight whilst we locate everything&hellip;</p>
+      </div>
+
+      <div class="progress-list" id="progress-list">
+        <!-- Progress items are injected by progress.js -->
+      </div>
+    </section>
+
+    <!-- ===== SCREEN 2: 404 Error ===== -->
+    <section class="screen screen-error" id="screen-error">
+      <div class="error-icon">&#9888;</div>
+      <h1>404</h1>
+      <h2>Gift Not Found</h2>
+      <p>We're terribly sorry. The gift retrieval service has encountered an unexpected error.</p>
+      <div class="error-code">ERR_GIFT_TOO_LARGE // ref: EDI &rarr; VCE</div>
+      <button class="btn btn-error" id="btn-next-steps">Next Steps</button>
+    </section>
+
+    <!-- ===== SCREEN 3: Suitcase Story (Multi-step) ===== -->
+    <section class="screen screen-suitcase" id="screen-suitcase">
+      <div class="bg-circles">
+        <span></span><span></span><span></span>
+      </div>
+
+      <div class="suitcase-viewport" id="suitcase-viewport">
+        <!-- Step 0: Intro -->
+        <div class="suitcase-step active" data-step="0">
+          <h2>Right, here's what happened&hellip;</h2>
+          <p>We tried. We really did.</p>
+        </div>
+
+        <!-- Step 1: Gift too big -->
+        <div class="suitcase-step" data-step="1">
+          <h2>The gift was&hellip; a bit ambitious</h2>
+          <div class="gift-overflow">
+            <svg viewBox="0 0 200 220" width="280" height="308" xmlns="http://www.w3.org/2000/svg">
+              <!-- Suitcase handle -->
+              <rect x="70" y="100" width="60" height="12" rx="6" fill="none" stroke="#B08FB0" stroke-width="3"/>
+              <!-- Suitcase lid (animated) -->
+              <rect class="svg-lid" x="30" y="112" width="140" height="30" rx="6" fill="#D4B2D4" stroke="#B08FB0" stroke-width="2"/>
+              <!-- Suitcase body -->
+              <rect x="30" y="140" width="140" height="70" rx="8" fill="#C8A2C8" stroke="#B08FB0" stroke-width="2"/>
+              <!-- Gift box (sticking out the top) -->
+              <g class="svg-gift">
+                <rect x="40" y="40" width="120" height="90" rx="6" fill="#F4B9C2"/>
+                <!-- Ribbon cross -->
+                <rect x="94" y="40" width="12" height="90" fill="#F5D6A8"/>
+                <rect x="40" y="78" width="120" height="12" fill="#F5D6A8"/>
+                <!-- Bow -->
+                <ellipse cx="90" cy="42" rx="18" ry="10" fill="#F5D6A8"/>
+                <ellipse cx="110" cy="42" rx="18" ry="10" fill="#F5D6A8"/>
+                <circle cx="100" cy="42" r="6" fill="#E8C490"/>
+              </g>
+            </svg>
+          </div>
+          <p>It simply would not fit in the suitcase. Not even close.</p>
+        </div>
+
+        <!-- Step 2: Map Edinburgh to Venice -->
+        <div class="suitcase-step" data-step="2">
+          <h2>Edinburgh &rarr; Venice</h2>
+          <div class="journey-container">
+            <div id="journey-map" class="journey-map"></div>
+          </div>
+          <p>1,500 miles is a long way to lug something that won't fit through airport security.</p>
+        </div>
+
+        <!-- Step 3: Resolution -->
+        <div class="suitcase-step" data-step="3">
+          <h2>So we made other arrangements&hellip;</h2>
+          <div class="big-emoji">&#x1F381;</div>
+          <p>Your gift couldn't travel by suitcase, but it's found another way to reach you. Have a watch of this&hellip;</p>
+          <button class="btn btn-primary" id="btn-show-video">Show Me</button>
+        </div>
+      </div>
+
+      <!-- Step dots + hint (outside viewport so always visible) -->
+      <div class="suitcase-nav">
+        <div class="step-dots" id="step-dots">
+          <span class="step-dot active"></span>
+          <span class="step-dot"></span>
+          <span class="step-dot"></span>
+          <span class="step-dot"></span>
+        </div>
+        <span class="tap-hint" id="tap-hint">Tap to continue</span>
+      </div>
+    </section>
+
+    <!-- ===== SCREEN 4: Video ===== -->
+    <section class="screen screen-video" id="screen-video">
+      <div class="video-container" id="video-container">
+        <video id="gift-video" playsinline preload="metadata">
+          <!-- Add your video source here -->
+          <!-- <source src="assets/video/gift.mp4" type="video/mp4"> -->
+        </video>
+        <button class="video-play-btn" id="video-play-btn">
+          <div class="play-icon"></div>
+        </button>
+        <div class="video-placeholder" id="video-placeholder">
+          <div class="video-placeholder-icon">&#x1F3AC;</div>
+          <span>Video will appear here</span>
+          <span style="font-size:0.75rem;">Add your file to assets/video/</span>
+        </div>
+      </div>
+      <button class="btn btn-white video-continue" id="btn-video-continue">See Your Gift</button>
+    </section>
+
+    <!-- ===== SCREEN 5: 3D Model ===== -->
+    <section class="screen screen-model" id="screen-model">
+      <div class="model-container" id="model-container">
+        <canvas id="model-canvas"></canvas>
+        <div class="model-overlay">
+          <h2>Your Gift</h2>
+          <p>Drag to rotate &middot; Pinch to zoom</p>
+        </div>
+      </div>
+      <div class="model-placeholder" id="model-placeholder" style="display:none;">
+        <div class="model-placeholder-icon">&#x1F381;</div>
+        <p>3D model will appear here</p>
+        <p style="font-size:0.8rem;">Pop your .glb file in assets/model/</p>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- Dependencies (CDN) -->
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script type="importmap">
+  {
+    "imports": {
+      "three": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js",
+      "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"
+    }
+  }
+  </script>
+
+  <!-- App modules -->
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,746 @@
+/* ============================================
+   GIFT APP — Soft Pastel Theme
+   ============================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&display=swap');
+
+/* --- CSS Custom Properties --- */
+:root {
+  --bg: #FFF5F9;
+  --bg-alt: #FEF0F5;
+  --lavender: #C8A2C8;
+  --pink: #F4B9C2;
+  --mint: #A8E6CF;
+  --coral: #F8A4B8;
+  --gold: #F5D6A8;
+  --error-red: #E74C3C;
+  --error-dark: #C0392B;
+  --text: #2C2C2C;
+  --text-light: #6B6B6B;
+  --white: #FFFFFF;
+  --shadow: rgba(200, 162, 200, 0.2);
+  --font: 'Quicksand', -apple-system, BlinkMacSystemFont, sans-serif;
+  --transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* --- Reset & Base --- */
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+  overflow: hidden;
+  font-family: var(--font);
+  background: var(--bg);
+  color: var(--text);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* --- Screen Container --- */
+.app {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+}
+
+.screen {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--transition);
+  overflow-y: auto;
+}
+
+.screen.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* --- Typography --- */
+h1 {
+  font-size: clamp(1.8rem, 5vw, 3rem);
+  font-weight: 700;
+  line-height: 1.2;
+  margin-bottom: 0.5rem;
+}
+
+h2 {
+  font-size: clamp(1.2rem, 3.5vw, 1.8rem);
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+p {
+  font-size: clamp(0.95rem, 2.5vw, 1.15rem);
+  line-height: 1.6;
+  color: var(--text-light);
+  max-width: 36ch;
+  text-align: center;
+}
+
+/* --- Buttons --- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.9rem 2.2rem;
+  border: none;
+  border-radius: 50px;
+  font-family: var(--font);
+  font-size: 1.05rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.btn:active {
+  transform: scale(0.96);
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, var(--lavender), var(--pink));
+  color: var(--white);
+  box-shadow: 0 4px 15px var(--shadow);
+}
+
+.btn-primary:hover {
+  box-shadow: 0 6px 25px var(--shadow);
+  transform: translateY(-1px);
+}
+
+.btn-error {
+  background: var(--white);
+  color: var(--error-red);
+  border: 2px solid var(--error-red);
+}
+
+.btn-error:hover {
+  background: var(--error-red);
+  color: var(--white);
+}
+
+.btn-white {
+  background: var(--white);
+  color: var(--lavender);
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+/* ============================================
+   SCREEN 1 — Progress / Loading
+   ============================================ */
+.screen-progress {
+  background: var(--bg);
+  gap: 0.5rem;
+}
+
+.progress-header {
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.progress-header h1 {
+  background: linear-gradient(135deg, var(--lavender), var(--pink));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.progress-list {
+  width: 100%;
+  max-width: 400px;
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+.progress-item {
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+.progress-item.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.progress-label {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.4rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.progress-label .status {
+  font-size: 0.8rem;
+  color: var(--text-light);
+}
+
+.progress-label .status.done {
+  color: var(--mint);
+}
+
+.progress-label .status.fail {
+  color: var(--error-red);
+}
+
+.progress-track {
+  width: 100%;
+  height: 10px;
+  background: #F0E4EE;
+  border-radius: 10px;
+  overflow: hidden;
+  position: relative;
+}
+
+.progress-fill {
+  height: 100%;
+  width: 0%;
+  border-radius: 10px;
+  transition: width 0.05s linear;
+  position: relative;
+}
+
+.progress-fill.lavender { background: linear-gradient(90deg, var(--lavender), #D4B2D4); }
+.progress-fill.pink { background: linear-gradient(90deg, var(--pink), #F8CDD6); }
+.progress-fill.mint { background: linear-gradient(90deg, var(--mint), #C2F0DE); }
+.progress-fill.coral { background: linear-gradient(90deg, var(--coral), #FACBD8); }
+.progress-fill.gold { background: linear-gradient(90deg, var(--gold), #F8E2C0); }
+
+.progress-fill::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 30px;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4));
+  border-radius: 10px;
+}
+
+.tick-icon {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  opacity: 0;
+  transform: scale(0);
+  transition: opacity 0.3s ease, transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.tick-icon.show {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* ============================================
+   SCREEN 2 — 404 Error
+   ============================================ */
+.screen-error {
+  background: var(--error-red);
+  color: var(--white);
+  gap: 1.5rem;
+  text-align: center;
+}
+
+.screen-error.flash {
+  animation: errorFlash 0.6s ease;
+}
+
+@keyframes errorFlash {
+  0% { background: var(--white); }
+  15% { background: var(--error-red); }
+  30% { background: var(--white); }
+  45% { background: var(--error-red); }
+  60% { background: var(--error-dark); }
+  100% { background: var(--error-red); }
+}
+
+.screen-error.shake {
+  animation: screenShake 0.5s ease;
+}
+
+@keyframes screenShake {
+  0%, 100% { transform: translateX(0); }
+  10% { transform: translateX(-8px); }
+  20% { transform: translateX(8px); }
+  30% { transform: translateX(-6px); }
+  40% { transform: translateX(6px); }
+  50% { transform: translateX(-4px); }
+  60% { transform: translateX(4px); }
+  70% { transform: translateX(-2px); }
+  80% { transform: translateX(2px); }
+}
+
+.error-icon {
+  font-size: 4rem;
+  margin-bottom: 0.5rem;
+  animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+.screen-error h1 {
+  font-size: clamp(2.2rem, 7vw, 4rem);
+  color: var(--white);
+  -webkit-text-fill-color: var(--white);
+  text-shadow: 0 2px 10px rgba(0,0,0,0.2);
+}
+
+.screen-error p {
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 1.1rem;
+}
+
+.error-code {
+  font-family: monospace;
+  font-size: 0.85rem;
+  background: rgba(0,0,0,0.2);
+  padding: 0.4rem 1rem;
+  border-radius: 6px;
+  color: rgba(255,255,255,0.6);
+  margin-top: 0.5rem;
+}
+
+/* ============================================
+   SCREEN 3 — Suitcase Story (Multi-step)
+   ============================================ */
+.screen-suitcase {
+  background: var(--bg);
+  flex-direction: column;
+  padding: 0;
+}
+
+.suitcase-viewport {
+  flex: 1;
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+}
+
+.suitcase-step {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem 1.5rem;
+  text-align: center;
+  gap: 1rem;
+  opacity: 0;
+  transform: translateX(60px);
+  pointer-events: none;
+  transition: opacity 0.55s cubic-bezier(0.4, 0, 0.2, 1),
+              transform 0.55s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: opacity, transform;
+}
+
+.suitcase-step.active {
+  opacity: 1;
+  transform: translateX(0);
+  pointer-events: auto;
+}
+
+.suitcase-step.exited {
+  opacity: 0;
+  transform: translateX(-60px);
+  pointer-events: none;
+}
+
+/* Navigation area (dots + hint) */
+.suitcase-nav {
+  position: relative;
+  z-index: 5;
+  padding: 1rem 2rem 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.step-dots {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.step-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #E0D0E0;
+  transition: background 0.3s ease, transform 0.3s ease;
+}
+
+.step-dot.active {
+  background: var(--lavender);
+  transform: scale(1.4);
+}
+
+.tap-hint {
+  font-size: 0.8rem;
+  color: var(--text-light);
+  opacity: 0.5;
+}
+
+/* Big emoji in the resolution step */
+.big-emoji {
+  font-size: 6rem;
+  line-height: 1;
+  margin: 0.5rem 0;
+}
+
+/* Gift overflow SVG illustration */
+.gift-overflow {
+  margin: 0.5rem 0;
+}
+
+.gift-overflow svg {
+  display: block;
+  max-width: 280px;
+  height: auto;
+}
+
+/* Lid wobble animation */
+.suitcase-step.active .svg-lid {
+  animation: lidWobble 1.8s ease-in-out infinite;
+  transform-origin: 30px 142px;
+}
+
+@keyframes lidWobble {
+  0%, 100% { transform: rotate(0deg) translateY(0); }
+  25% { transform: rotate(-12deg) translateY(-6px); }
+  50% { transform: rotate(-3deg) translateY(-1px); }
+  75% { transform: rotate(-10deg) translateY(-5px); }
+}
+
+/* Gift bob animation */
+.suitcase-step.active .svg-gift {
+  animation: svgGiftBob 1.8s ease-in-out infinite;
+}
+
+@keyframes svgGiftBob {
+  0%, 100% { transform: translateY(0); }
+  25% { transform: translateY(-6px); }
+  50% { transform: translateY(-1px); }
+  75% { transform: translateY(-5px); }
+}
+
+/* Map / journey — Leaflet */
+.journey-container {
+  width: min(440px, 92vw);
+  height: 300px;
+  margin: 0.5rem 0;
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(200, 162, 200, 0.25);
+}
+
+.journey-map {
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+}
+
+/* Leaflet overrides to match pastel theme */
+.journey-map .leaflet-control-attribution {
+  font-size: 8px;
+  opacity: 0.5;
+}
+
+/* Custom city label tooltip */
+.city-tooltip {
+  background: var(--white);
+  border: 2px solid var(--lavender);
+  border-radius: 8px;
+  padding: 4px 12px;
+  font-family: var(--font);
+  font-weight: 600;
+  font-size: 13px;
+  color: var(--text);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+  white-space: nowrap;
+}
+
+.city-tooltip::before {
+  border-top-color: var(--lavender);
+}
+
+/* Animated route line on the map */
+.route-line {
+  stroke-dashoffset: var(--route-len, 2000);
+  stroke-dasharray: var(--route-len, 2000);
+  animation: none;
+}
+
+.route-line.animate {
+  animation: drawRoute 2.5s ease-in-out forwards;
+}
+
+@keyframes drawRoute {
+  from { stroke-dashoffset: var(--route-len, 2000); }
+  to   { stroke-dashoffset: 0; }
+}
+
+/* ============================================
+   SCREEN 4 — Video
+   ============================================ */
+.screen-video {
+  background: #0A0A0A;
+  gap: 1.5rem;
+}
+
+.video-container {
+  position: relative;
+  width: min(90vw, 560px);
+  aspect-ratio: 16/9;
+  border-radius: 16px;
+  overflow: hidden;
+  background: #1a1a1a;
+  box-shadow: 0 8px 40px rgba(0,0,0,0.4);
+}
+
+.video-container video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 16px;
+}
+
+.video-play-btn {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0,0,0,0.3);
+  cursor: pointer;
+  transition: background 0.3s ease;
+  border: none;
+  border-radius: 16px;
+}
+
+.video-play-btn:hover {
+  background: rgba(0,0,0,0.15);
+}
+
+.play-icon {
+  width: 64px;
+  height: 64px;
+  background: var(--white);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+  transition: transform 0.2s ease;
+}
+
+.video-play-btn:hover .play-icon {
+  transform: scale(1.08);
+}
+
+.play-icon::after {
+  content: '';
+  display: block;
+  width: 0;
+  height: 0;
+  margin-left: 5px;
+  border-left: 22px solid var(--lavender);
+  border-top: 14px solid transparent;
+  border-bottom: 14px solid transparent;
+}
+
+.video-placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  color: rgba(255,255,255,0.4);
+  font-size: 0.9rem;
+  text-align: center;
+  height: 100%;
+}
+
+.video-placeholder-icon {
+  font-size: 3rem;
+  opacity: 0.5;
+}
+
+.screen-video p {
+  color: rgba(255,255,255,0.6);
+}
+
+.video-continue {
+  display: none;
+  margin-top: 1rem;
+}
+
+.video-continue.show {
+  display: inline-flex;
+}
+
+/* ============================================
+   SCREEN 5 — 3D Model Viewer
+   ============================================ */
+.screen-model {
+  background: linear-gradient(135deg, var(--bg), #F0E8F5);
+  padding: 0;
+}
+
+.model-container {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+#model-canvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.model-overlay {
+  position: absolute;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+  pointer-events: none;
+}
+
+.model-overlay h2 {
+  color: var(--text);
+  margin-bottom: 0.25rem;
+}
+
+.model-overlay p {
+  font-size: 0.85rem;
+}
+
+.model-placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  color: var(--text-light);
+}
+
+.model-placeholder-icon {
+  font-size: 4rem;
+  animation: spin 4s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ============================================
+   Utility & Animations
+   ============================================ */
+.fade-in {
+  animation: fadeIn 0.6s ease forwards;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(15px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.delay-1 { animation-delay: 0.2s; }
+.delay-2 { animation-delay: 0.4s; }
+.delay-3 { animation-delay: 0.6s; }
+.delay-4 { animation-delay: 0.8s; }
+
+/* Screen-specific background decorations */
+.bg-circles {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 0;
+}
+
+.bg-circles span {
+  position: absolute;
+  border-radius: 50%;
+  opacity: 0.15;
+}
+
+.bg-circles span:nth-child(1) {
+  width: 300px; height: 300px;
+  background: var(--lavender);
+  top: -80px; right: -80px;
+}
+
+.bg-circles span:nth-child(2) {
+  width: 200px; height: 200px;
+  background: var(--mint);
+  bottom: -60px; left: -40px;
+}
+
+.bg-circles span:nth-child(3) {
+  width: 150px; height: 150px;
+  background: var(--pink);
+  top: 40%; left: -50px;
+}
+
+.screen > *:not(.bg-circles) {
+  position: relative;
+  z-index: 1;
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--lavender);
+  border-radius: 4px;
+}
+
+/* Mobile adjustments */
+@media (max-width: 480px) {
+  .screen {
+    padding: 1.5rem 1.2rem;
+  }
+
+  .btn {
+    padding: 0.8rem 1.8rem;
+    font-size: 0.95rem;
+  }
+
+  .error-icon {
+    font-size: 3rem;
+  }
+
+  .gift-overflow {
+    width: min(160px, 45vw);
+    height: min(160px, 45vw);
+  }
+}
