@@ -7,7 +7,7 @@
  *   ?screen=error      — jump straight to the 404 screen
  *   ?screen=suitcase   — jump to the suitcase story
  *   ?screen=suitcase&step=2  — jump to a specific suitcase step (0-3)
- *   ?screen=video      — jump to the video screen
+
  *   ?screen=model      — jump to the 3D model screen
  *
  * Model rotation (degrees, applied before auto-spin):
@@ -20,7 +20,7 @@
 
 import { runProgress } from './progress.js';
 import { initSuitcase } from './suitcase.js';
-import { initVideo } from './video.js';
+
 import { initModelViewer } from './model-viewer.js';
 
 // --- Parse query params ---
@@ -33,7 +33,7 @@ const screens = {
   progress: document.getElementById('screen-progress'),
   error: document.getElementById('screen-error'),
   suitcase: document.getElementById('screen-suitcase'),
-  video: document.getElementById('screen-video'),
+
   model: document.getElementById('screen-model'),
 };
 
@@ -75,9 +75,7 @@ function jumpTo(name) {
     case 'suitcase':
       initSuitcase(suitcaseStep !== null ? parseInt(suitcaseStep, 10) : 0);
       break;
-    case 'video':
-      initVideo();
-      break;
+
     case 'model':
       initModelViewer();
       break;
@@ -96,15 +94,9 @@ function init() {
     initSuitcase();
   });
 
-  // "Show Me" button on last suitcase step → video
-  document.getElementById('btn-show-video').addEventListener('click', (e) => {
+  // "See Your Gift" button on last suitcase step → 3D model
+  document.getElementById('btn-show-gift').addEventListener('click', (e) => {
     e.stopPropagation();
-    showScreen('video');
-    initVideo();
-  });
-
-  // "See Your Gift" button after video → 3D model
-  document.getElementById('btn-video-continue').addEventListener('click', () => {
     showScreen('model');
     initModelViewer();
   });

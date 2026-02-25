@@ -198,7 +198,7 @@ export function initSuitcase(startAt = 0) {
   // Tap/click on the suitcase screen to advance
   const screen = document.getElementById('screen-suitcase');
   screen.addEventListener('click', (e) => {
-    if (e.target.closest('#btn-show-video')) return;
+    if (e.target.closest('#btn-show-gift')) return;
     if (currentStep >= totalSteps - 1) return;
     currentStep++;
     showStep(currentStep, true);

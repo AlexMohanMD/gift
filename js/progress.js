@@ -5,7 +5,7 @@
 const STEPS = [
   { label: 'Authenticating',                colour: 'lavender', duration: 2200 },
   { label: 'Locating gift',                 colour: 'pink',     duration: 2800 },
-  { label: 'Cross-referencing gift registry', colour: 'mint',   duration: 2000 },
+  { label: 'Cross-referencing list of gift ideas', colour: 'mint',   duration: 2000 },
   { label: 'Verifying recipient',           colour: 'coral',    duration: 1800 },
   { label: 'Finalising',                    colour: 'gold',     duration: 3000, failAt: 87 },
 ];
