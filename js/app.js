@@ -34,6 +34,7 @@ const screens = {
   error: document.getElementById('screen-error'),
   suitcase: document.getElementById('screen-suitcase'),
 
+  poster: document.getElementById('screen-poster'),
   model: document.getElementById('screen-model'),
 };
 
@@ -76,6 +77,8 @@ function jumpTo(name) {
       initSuitcase(suitcaseStep !== null ? parseInt(suitcaseStep, 10) : 0);
       break;
 
+    case 'poster':
+      break;
     case 'model':
       initModelViewer();
       break;
@@ -94,9 +97,19 @@ function init() {
     initSuitcase();
   });
 
-  // "See Your Gift" button on last suitcase step → 3D model
+  // "See the Poster" button on last suitcase step → poster
   document.getElementById('btn-show-gift').addEventListener('click', (e) => {
     e.stopPropagation();
+    // Re-trigger the poster reveal animation
+    const img = document.getElementById('poster-image');
+    img.style.animation = 'none';
+    img.getBoundingClientRect(); // reflow
+    img.style.animation = '';
+    showScreen('poster');
+  });
+
+  // "See in 3D" button on poster → 3D model
+  document.getElementById('btn-poster-continue').addEventListener('click', () => {
     showScreen('model');
     initModelViewer();
   });

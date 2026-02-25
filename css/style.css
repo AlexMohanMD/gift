@@ -505,102 +505,37 @@ p {
 }
 
 /* ============================================
-   SCREEN 4 — Video
+   SCREEN 4 — Poster
    ============================================ */
-.screen-video {
-  background: #0A0A0A;
-  gap: 1.5rem;
+.screen-poster {
+  background: var(--bg);
+  gap: 2rem;
+  justify-content: center;
 }
 
-.video-container {
-  position: relative;
-  width: min(90vw, 560px);
-  aspect-ratio: 16/9;
-  border-radius: 16px;
-  overflow: hidden;
-  background: #1a1a1a;
-  box-shadow: 0 8px 40px rgba(0,0,0,0.4);
-}
-
-.video-container video {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  border-radius: 16px;
-}
-
-.video-play-btn {
-  position: absolute;
-  inset: 0;
+.poster-wrapper {
+  flex: 1;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: rgba(0,0,0,0.3);
-  cursor: pointer;
-  transition: background 0.3s ease;
-  border: none;
-  border-radius: 16px;
+  min-height: 0;
+  padding: 0 1rem;
 }
 
-.video-play-btn:hover {
-  background: rgba(0,0,0,0.15);
-}
-
-.play-icon {
-  width: 64px;
-  height: 64px;
-  background: var(--white);
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.3);
-  transition: transform 0.2s ease;
-}
-
-.video-play-btn:hover .play-icon {
-  transform: scale(1.08);
-}
-
-.play-icon::after {
-  content: '';
+.poster-image {
   display: block;
-  width: 0;
-  height: 0;
-  margin-left: 5px;
-  border-left: 22px solid var(--lavender);
-  border-top: 14px solid transparent;
-  border-bottom: 14px solid transparent;
+  max-width: min(420px, 90vw);
+  max-height: 70vh;
+  width: auto;
+  height: auto;
+  border-radius: 12px;
+  box-shadow: 0 12px 40px rgba(200, 162, 200, 0.35);
+  animation: posterReveal 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) both;
 }
 
-.video-placeholder {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
-  color: rgba(255,255,255,0.4);
-  font-size: 0.9rem;
-  text-align: center;
-  height: 100%;
-}
-
-.video-placeholder-icon {
-  font-size: 3rem;
-  opacity: 0.5;
-}
-
-.screen-video p {
-  color: rgba(255,255,255,0.6);
-}
-
-.video-continue {
-  display: none;
-  margin-top: 1rem;
-}
-
-.video-continue.show {
-  display: inline-flex;
+@keyframes posterReveal {
+  from { opacity: 0; transform: scale(0.88) translateY(20px); }
+  to   { opacity: 1; transform: scale(1) translateY(0); }
 }
 
 /* ============================================
