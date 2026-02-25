@@ -89,7 +89,7 @@ function initMap() {
 
     L.marker(VENICE, { icon: vceIcon })
       .addTo(map)
-      .bindTooltip('Venice', {
+      .bindTooltip('The Dolomites', {
         permanent: true,
         direction: 'bottom',
         offset: [0, 10],
