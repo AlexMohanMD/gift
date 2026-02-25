@@ -21,7 +21,7 @@
 import { runProgress } from './progress.js';
 import { initSuitcase } from './suitcase.js';
 
-import { initModelViewer } from './model-viewer.js';
+import { initModelViewer, preloadModel } from './model-viewer.js';
 
 // --- Parse query params ---
 const params = new URLSearchParams(window.location.search);
@@ -53,6 +53,11 @@ async function startFlow() {
   // SCREEN 1: Progress bars
   showScreen('progress');
   await runProgress();
+
+  // Start loading the 3D model in the background while the user reads
+  // the error and suitcase screens — by the time they tap "See in 3D"
+  // the file will already be parsed and ready.
+  preloadModel();
 
   // SCREEN 2: 404 Error — with flash + shake
   showScreen('error');
