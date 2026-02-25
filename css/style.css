@@ -24,13 +24,16 @@
 }
 
 /* --- Reset & Base --- */
-*, *::before, *::after {
+*,
+*::before,
+*::after {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-html, body {
+html,
+body {
   height: 100%;
   overflow: hidden;
   font-family: var(--font);
@@ -140,7 +143,7 @@ p {
 .btn-white {
   background: var(--white);
   color: var(--lavender);
-  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
 }
 
 /* ============================================
@@ -221,11 +224,25 @@ p {
   position: relative;
 }
 
-.progress-fill.lavender { background: linear-gradient(90deg, var(--lavender), #D4B2D4); }
-.progress-fill.pink { background: linear-gradient(90deg, var(--pink), #F8CDD6); }
-.progress-fill.mint { background: linear-gradient(90deg, var(--mint), #C2F0DE); }
-.progress-fill.coral { background: linear-gradient(90deg, var(--coral), #FACBD8); }
-.progress-fill.gold { background: linear-gradient(90deg, var(--gold), #F8E2C0); }
+.progress-fill.lavender {
+  background: linear-gradient(90deg, var(--lavender), #D4B2D4);
+}
+
+.progress-fill.pink {
+  background: linear-gradient(90deg, var(--pink), #F8CDD6);
+}
+
+.progress-fill.mint {
+  background: linear-gradient(90deg, var(--mint), #C2F0DE);
+}
+
+.progress-fill.coral {
+  background: linear-gradient(90deg, var(--coral), #FACBD8);
+}
+
+.progress-fill.gold {
+  background: linear-gradient(90deg, var(--gold), #F8E2C0);
+}
 
 .progress-fill::after {
   content: '';
@@ -234,7 +251,7 @@ p {
   right: 0;
   width: 30px;
   height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4));
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4));
   border-radius: 10px;
 }
 
@@ -267,12 +284,29 @@ p {
 }
 
 @keyframes errorFlash {
-  0% { background: var(--white); }
-  15% { background: var(--error-red); }
-  30% { background: var(--white); }
-  45% { background: var(--error-red); }
-  60% { background: var(--error-dark); }
-  100% { background: var(--error-red); }
+  0% {
+    background: var(--white);
+  }
+
+  15% {
+    background: var(--error-red);
+  }
+
+  30% {
+    background: var(--white);
+  }
+
+  45% {
+    background: var(--error-red);
+  }
+
+  60% {
+    background: var(--error-dark);
+  }
+
+  100% {
+    background: var(--error-red);
+  }
 }
 
 .screen-error.shake {
@@ -280,15 +314,43 @@ p {
 }
 
 @keyframes screenShake {
-  0%, 100% { transform: translateX(0); }
-  10% { transform: translateX(-8px); }
-  20% { transform: translateX(8px); }
-  30% { transform: translateX(-6px); }
-  40% { transform: translateX(6px); }
-  50% { transform: translateX(-4px); }
-  60% { transform: translateX(4px); }
-  70% { transform: translateX(-2px); }
-  80% { transform: translateX(2px); }
+
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+
+  10% {
+    transform: translateX(-8px);
+  }
+
+  20% {
+    transform: translateX(8px);
+  }
+
+  30% {
+    transform: translateX(-6px);
+  }
+
+  40% {
+    transform: translateX(6px);
+  }
+
+  50% {
+    transform: translateX(-4px);
+  }
+
+  60% {
+    transform: translateX(4px);
+  }
+
+  70% {
+    transform: translateX(-2px);
+  }
+
+  80% {
+    transform: translateX(2px);
+  }
 }
 
 .error-icon {
@@ -298,15 +360,22 @@ p {
 }
 
 @keyframes pulse {
-  0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.05); }
+
+  0%,
+  100% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.05);
+  }
 }
 
 .screen-error h1 {
   font-size: clamp(2.2rem, 7vw, 4rem);
   color: var(--white);
   -webkit-text-fill-color: var(--white);
-  text-shadow: 0 2px 10px rgba(0,0,0,0.2);
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
 }
 
 .screen-error p {
@@ -317,10 +386,10 @@ p {
 .error-code {
   font-family: monospace;
   font-size: 0.85rem;
-  background: rgba(0,0,0,0.2);
+  background: rgba(0, 0, 0, 0.2);
   padding: 0.4rem 1rem;
   border-radius: 6px;
-  color: rgba(255,255,255,0.6);
+  color: rgba(255, 255, 255, 0.6);
   margin-top: 0.5rem;
 }
 
@@ -354,7 +423,7 @@ p {
   transform: translateX(60px);
   pointer-events: none;
   transition: opacity 0.55s cubic-bezier(0.4, 0, 0.2, 1),
-              transform 0.55s cubic-bezier(0.4, 0, 0.2, 1);
+    transform 0.55s cubic-bezier(0.4, 0, 0.2, 1);
   will-change: opacity, transform;
 }
 
@@ -415,12 +484,8 @@ p {
 /* Gift overflow SVG illustration */
 .gift-overflow {
   margin: 0.5rem 0;
-}
-
-.gift-overflow svg {
-  display: block;
-  max-width: 280px;
-  height: auto;
+  width: min(280px, 75vw);
+  flex-shrink: 0;
 }
 
 /* Lid wobble animation */
@@ -430,10 +495,23 @@ p {
 }
 
 @keyframes lidWobble {
-  0%, 100% { transform: rotate(0deg) translateY(0); }
-  25% { transform: rotate(-12deg) translateY(-6px); }
-  50% { transform: rotate(-3deg) translateY(-1px); }
-  75% { transform: rotate(-10deg) translateY(-5px); }
+
+  0%,
+  100% {
+    transform: rotate(0deg) translateY(0);
+  }
+
+  25% {
+    transform: rotate(-12deg) translateY(-6px);
+  }
+
+  50% {
+    transform: rotate(-3deg) translateY(-1px);
+  }
+
+  75% {
+    transform: rotate(-10deg) translateY(-5px);
+  }
 }
 
 /* Gift bob animation */
@@ -442,10 +520,23 @@ p {
 }
 
 @keyframes svgGiftBob {
-  0%, 100% { transform: translateY(0); }
-  25% { transform: translateY(-6px); }
-  50% { transform: translateY(-1px); }
-  75% { transform: translateY(-5px); }
+
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  25% {
+    transform: translateY(-6px);
+  }
+
+  50% {
+    transform: translateY(-1px);
+  }
+
+  75% {
+    transform: translateY(-5px);
+  }
 }
 
 /* Map / journey — Leaflet */
@@ -480,7 +571,7 @@ p {
   font-weight: 600;
   font-size: 13px;
   color: var(--text);
-  box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
   white-space: nowrap;
 }
 
@@ -500,8 +591,13 @@ p {
 }
 
 @keyframes drawRoute {
-  from { stroke-dashoffset: var(--route-len, 2000); }
-  to   { stroke-dashoffset: 0; }
+  from {
+    stroke-dashoffset: var(--route-len, 2000);
+  }
+
+  to {
+    stroke-dashoffset: 0;
+  }
 }
 
 /* ============================================
@@ -534,8 +630,15 @@ p {
 }
 
 @keyframes posterReveal {
-  from { opacity: 0; transform: scale(0.88) translateY(20px); }
-  to   { opacity: 1; transform: scale(1) translateY(0); }
+  from {
+    opacity: 0;
+    transform: scale(0.88) translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
 }
 
 /* ============================================
@@ -591,7 +694,9 @@ p {
 }
 
 @keyframes spin {
-  to { transform: rotate(360deg); }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 /* ============================================
@@ -602,14 +707,32 @@ p {
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(15px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
-.delay-1 { animation-delay: 0.2s; }
-.delay-2 { animation-delay: 0.4s; }
-.delay-3 { animation-delay: 0.6s; }
-.delay-4 { animation-delay: 0.8s; }
+.delay-1 {
+  animation-delay: 0.2s;
+}
+
+.delay-2 {
+  animation-delay: 0.4s;
+}
+
+.delay-3 {
+  animation-delay: 0.6s;
+}
+
+.delay-4 {
+  animation-delay: 0.8s;
+}
 
 /* Screen-specific background decorations */
 .bg-circles {
@@ -627,24 +750,30 @@ p {
 }
 
 .bg-circles span:nth-child(1) {
-  width: 300px; height: 300px;
+  width: 300px;
+  height: 300px;
   background: var(--lavender);
-  top: -80px; right: -80px;
+  top: -80px;
+  right: -80px;
 }
 
 .bg-circles span:nth-child(2) {
-  width: 200px; height: 200px;
+  width: 200px;
+  height: 200px;
   background: var(--mint);
-  bottom: -60px; left: -40px;
+  bottom: -60px;
+  left: -40px;
 }
 
 .bg-circles span:nth-child(3) {
-  width: 150px; height: 150px;
+  width: 150px;
+  height: 150px;
   background: var(--pink);
-  top: 40%; left: -50px;
+  top: 40%;
+  left: -50px;
 }
 
-.screen > *:not(.bg-circles) {
+.screen>*:not(.bg-circles) {
   position: relative;
   z-index: 1;
 }
